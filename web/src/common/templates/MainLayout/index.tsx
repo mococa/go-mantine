@@ -2,6 +2,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Box, Flex } from '@mantine/core';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
+import { useMediaQuery } from '@mantine/hooks';
 import { MdDashboard } from 'react-icons/md';
 
 /* ---------- Common Components ---------- */
@@ -22,6 +23,9 @@ const actions: SpotlightAction[] = [
 ];
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
+  /* ---------- Hooks ---------- */
+  const mobile = useMediaQuery('(max-width: 500px)');
+
   return (
     <Box sx={MainSx} component="main">
       <SpotlightProvider
@@ -33,7 +37,7 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
         <Flex direction="column" style={{ flex: 1, overflow: 'auto' }} h="100%">
           <Navbar />
 
-          <Box p={32}>{children}</Box>
+          <Box p={mobile ? 12 : 32}>{children}</Box>
         </Flex>
       </SpotlightProvider>
     </Box>

@@ -7,6 +7,7 @@ import { Auth } from '_@types/auth';
 
 /* ---------- Helpers ---------- */
 import { clearStorageTokens } from '_utils/helpers/auth/clearStorageTokens';
+import { getStorageTokens } from '_utils/helpers/auth/getStorageTokens';
 
 /* ---------- Services ---------- */
 import { auth } from '_services/auth';
@@ -44,7 +45,7 @@ const local_private_api = axios.create({
 /* ---------- Interceptors ---------- */
 const private_api_interceptor = async (config: AxiosRequestConfig) => {
   try {
-    const id_token = localStorage.getItem('@%name%:id_token');
+    const { id_token } = getStorageTokens();
 
     if (!id_token) return config;
 
@@ -52,15 +53,8 @@ const private_api_interceptor = async (config: AxiosRequestConfig) => {
 
     const exp = decoded_token.exp * 1000;
 
-    if (new Date() > new Date(exp)) {
-      throw new Error('Unauthorized');
-    }
-
-    if (!config.headers) throw new Error('Unauthorized');
-
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = id_token;
-  } catch {
+    if (new Date() > new Date(exp)) throw new Error('Unauthorized');
+  } catch (err) {
     clearStorageTokens({ storage_method: 'local' });
     clearStorageTokens({ storage_method: 'session' });
 

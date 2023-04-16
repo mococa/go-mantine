@@ -35,3 +35,11 @@ Exit psql
 ```
 
 Should be good enough to set it up properly
+
+### Starting application
+
+With make installed in your machine, run `make dev` or run `go run main.go` if you don't have it installed
+
+### Building application
+
+With make installed, run `make build` or run `go build main.go`

@@ -13,7 +13,7 @@ import {
   Text,
 } from '@mantine/core';
 import Link from 'next/link';
-import { useOs } from '@mantine/hooks';
+import { useOs, useMediaQuery } from '@mantine/hooks';
 import { useSpotlight } from '@mantine/spotlight';
 import { MdLogout, MdNotifications, MdPerson, MdSearch } from 'react-icons/md';
 
@@ -28,6 +28,7 @@ import { MenuItemSx, NavbarSx } from './styles';
 
 export const Navbar = () => {
   /* ---------- Hooks ---------- */
+  const mobile = useMediaQuery('(max-width: 500px)');
   const os = useOs();
   const { openSpotlight } = useSpotlight();
   const { user } = useAuth();
@@ -80,28 +81,32 @@ export const Navbar = () => {
     </Menu.Dropdown>
   );
 
+  const renderNotificationButton = () => (
+    <Button
+      radius="lg"
+      p={4}
+      w={36}
+      variant="white"
+      bg="transparent"
+      color="gray"
+      styles={{ label: { overflow: 'visible' } }}
+    >
+      <Indicator
+        label={4}
+        size={20}
+        position="top-end"
+        offset={5}
+        pr={4}
+        styles={{ common: { span: { top: 1.5 } } }}
+      >
+        <MdNotifications size={24} />
+      </Indicator>
+    </Button>
+  );
+
   const renderUserMenu = () => (
     <Flex align="center" gap="lg">
-      <Button
-        radius="lg"
-        p={4}
-        w={36}
-        variant="white"
-        bg="transparent"
-        color="gray"
-        styles={{ label: { overflow: 'visible' } }}
-      >
-        <Indicator
-          label={4}
-          size={20}
-          position="top-end"
-          offset={5}
-          pr={4}
-          styles={{ common: { span: { top: 1.5 } } }}
-        >
-          <MdNotifications size={24} />
-        </Indicator>
-      </Button>
+      {!mobile && renderNotificationButton()}
 
       <Menu shadow="md" width={200} position="bottom-end">
         <Menu.Target>
@@ -110,7 +115,7 @@ export const Navbar = () => {
               {user.full_name?.[0] || null}
             </Avatar>
 
-            <Text>{user.full_name}</Text>
+            {!mobile && <Text>{user.full_name}</Text>}
 
             <ChevronIcon />
           </Flex>
@@ -123,7 +128,11 @@ export const Navbar = () => {
 
   return (
     <Paper pos="sticky" top={0} sx={NavbarSx}>
-      <Flex p="16px 32px 4px" justify="space-between" gap="lg">
+      <Flex
+        p={`16px ${mobile ? 12 : 32}px 4px`}
+        justify="space-between"
+        gap="lg"
+      >
         {renderSearchBox()}
 
         {renderUserMenu()}
