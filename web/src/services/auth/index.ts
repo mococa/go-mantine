@@ -54,12 +54,12 @@ const forgot_password = async ({ email }: Auth.ForgotPasswordInput) => {
  * @property {string} code - Code sent by e-mail
  * @property {string} password - New password
  */
-const confirm_forgot_password = async ({
+const reset_password = async ({
   email,
   code,
   password,
 }: Auth.ConfirmForgotPasswordInput) => {
-  return apis.public.put('/forgot-password', { email, code, password });
+  return apis.public.put('/reset-password', { email, code, password });
 };
 
 /**
@@ -81,6 +81,6 @@ export const auth = {
   verify_user,
   resend_verification_code,
   forgot_password,
-  confirm_forgot_password,
+  reset_password,
   refresh_tokens,
 };
