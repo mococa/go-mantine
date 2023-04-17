@@ -159,13 +159,21 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   /* ---------- Effects ---------- */
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const { access_token, id_token, refresh_token, persist } =
-        getStorageTokens();
+    const client_side = typeof window !== 'undefined';
 
-      if ([access_token, id_token, refresh_token].every(Boolean))
-        handleParseTokens(access_token, id_token, refresh_token, persist);
-    }
+    if (!client_side) return undefined;
+
+    const { access_token, id_token, refresh_token } = getStorageTokens();
+
+    if ([access_token, id_token, refresh_token].every(Boolean))
+      handleParseTokens(
+        access_token,
+        id_token,
+        refresh_token,
+        Boolean(client_side && getStorageTokens().persist),
+      );
+
+    return undefined;
   }, [handleParseTokens]);
 
   /* ---------- Memos ---------- */

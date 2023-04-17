@@ -1,5 +1,5 @@
 /* -------------- External -------------- */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /* -------------- Hooks -------------- */
 import { useResetContexts } from '_hooks/resetContexts';
@@ -8,6 +8,9 @@ import { useResetContexts } from '_hooks/resetContexts';
 import { getStorageTokens } from '_utils/helpers/auth/getStorageTokens';
 
 export function useCheckUserIsLoggedIn(): void {
+  /* -------------- States -------------- */
+  const [checked, setChecked] = useState<boolean>(false);
+
   /* -------------- Hooks -------------- */
   const { handleLogout } = useResetContexts();
 
@@ -15,8 +18,10 @@ export function useCheckUserIsLoggedIn(): void {
   useEffect(() => {
     const { access_token, id_token, refresh_token } = getStorageTokens();
 
-    if (!access_token || !id_token || !refresh_token) {
-      handleLogout({ redirect: true });
+    if ((!access_token || !id_token || !refresh_token) && !checked) {
+      handleLogout({ redirect_back: true });
     }
-  }, [handleLogout]);
+
+    setChecked(true);
+  }, [checked, handleLogout]);
 }
