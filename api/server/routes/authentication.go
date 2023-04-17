@@ -235,7 +235,7 @@ func handleLogout(h *types.Handler) {
 	)
 }
 
-func main() {
+func init() {
 	loginRoute := &Route{
 		path:    "/sign-in",
 		method:  "POST",
@@ -280,7 +280,7 @@ func main() {
 
 	resetPasswordRoute := &Route{
 		path:    "/reset-password",
-		method:  "POST",
+		method:  "PUT",
 		handler: handleResetPassword,
 	}
 

@@ -39,10 +39,11 @@ func NewServer(port string, db *gorm.DB) *shared.HttpServer {
 
 func startServer(s *shared.HttpServer) {
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowCredentials: true,
 		AllowedHeaders:   []string{"*"},
 		ExposedHeaders:   []string{"set-cookie"},
+		AllowedMethods:   []string{"GET", "POST", "PUT"},
 		Debug:            true,
 	})
 
