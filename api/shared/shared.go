@@ -1,7 +1,6 @@
 package shared
 
 import (
-	"api/config"
 	"api/modules"
 
 	"net/http"
@@ -14,7 +13,6 @@ type HttpServer struct {
 	Router  *mux.Router
 	Port    string
 	Start   func()
-	Env     config.Config
 }
 
 type Handler struct {

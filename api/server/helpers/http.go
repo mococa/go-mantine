@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -90,6 +91,7 @@ func decodeIDToken(token string) (*Decoded, error) {
 }
 
 func SetAuthCookies(res http.ResponseWriter, tokens *types.AuthenticationResultType) {
+	domain := os.Getenv("DOMAIN")
 	expires := time.Now().Add(time.Duration(tokens.ExpiresIn) * time.Second)
 
 	http.SetCookie(res, &http.Cookie{
@@ -98,7 +100,8 @@ func SetAuthCookies(res http.ResponseWriter, tokens *types.AuthenticationResultT
 		Path:     "/",
 		Expires:  expires,
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
 		HttpOnly: true,
 		MaxAge:   int(tokens.ExpiresIn),
 	})
@@ -109,7 +112,8 @@ func SetAuthCookies(res http.ResponseWriter, tokens *types.AuthenticationResultT
 		Path:     "/",
 		Expires:  expires,
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
 		HttpOnly: true,
 		MaxAge:   int(tokens.ExpiresIn),
 	})
@@ -120,32 +124,47 @@ func SetAuthCookies(res http.ResponseWriter, tokens *types.AuthenticationResultT
 		Path:     "/",
 		Expires:  expires,
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
 		HttpOnly: true,
 		MaxAge:   int(tokens.ExpiresIn),
 	})
 }
 
 func RemoveAuthCookies(res http.ResponseWriter) {
+	domain := os.Getenv("DOMAIN")
+
 	http.SetCookie(res, &http.Cookie{
-		Name:    "id_token",
-		MaxAge:  -1,
-		Expires: time.Now().Add(-100 * time.Hour),
-		Path:    "/",
+		Name:     "id_token",
+		MaxAge:   -1,
+		Expires:  time.Now().Add(-100 * time.Hour),
+		Path:     "/",
+		Secure:   true,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
+		HttpOnly: true,
 	})
 
 	http.SetCookie(res, &http.Cookie{
-		Name:    "access_token",
-		MaxAge:  -1,
-		Expires: time.Now().Add(-100 * time.Hour),
-		Path:    "/",
+		Name:     "access_token",
+		MaxAge:   -1,
+		Expires:  time.Now().Add(-100 * time.Hour),
+		Path:     "/",
+		Secure:   true,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
+		HttpOnly: true,
 	})
 
 	http.SetCookie(res, &http.Cookie{
-		Name:    "refresh_token",
-		MaxAge:  -1,
-		Expires: time.Now().Add(-100 * time.Hour),
-		Path:    "/",
+		Name:     "refresh_token",
+		MaxAge:   -1,
+		Expires:  time.Now().Add(-100 * time.Hour),
+		Path:     "/",
+		Secure:   true,
+		Domain:   domain,
+		SameSite: http.SameSiteNoneMode,
+		HttpOnly: true,
 	})
 }
 
