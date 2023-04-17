@@ -15,7 +15,7 @@ export namespace Auth {
 
     // Cognito custom fields
 
-    "custom:full_name": string;
+    'custom:full_name': string;
     picture: string;
   }
 }

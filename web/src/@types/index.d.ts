@@ -1,3 +1,1 @@
-export namespace Models {
-    
-}
+export namespace Models {}
