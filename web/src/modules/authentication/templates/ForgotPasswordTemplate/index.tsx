@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Paper, Box, Title, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-/* ---------- Assets ---------- */
-import Logo from 'public/img/logo.svg';
+/* ---------- Common Components ---------- */
+import { Logo } from '_common/components/Logo';
 
 /* ---------- Module Types ---------- */
 import { Authentication } from '_modules/authentication/@types';
@@ -38,10 +38,10 @@ export const ForgotPasswordTemplate = () => {
     setLoading(true);
 
     try {
-      await services.auth.confirm_forgot_password({ email, code, password });
+      await services.auth.reset_password({ email, code, password });
 
       notifications.show({
-        message: 'Your password has been successfully changed',
+        message: 'Your password has been successfully changed.',
       });
       push('/');
     } catch (err) {

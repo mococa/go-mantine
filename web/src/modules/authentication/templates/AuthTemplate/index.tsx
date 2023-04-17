@@ -13,8 +13,8 @@ import { notifications } from '@mantine/notifications';
 import { useMediaQuery } from '@mantine/hooks';
 import { HiOutlineMailOpen } from 'react-icons/hi';
 
-/* ---------- Assets ---------- */
-import Logo from 'public/img/logo.svg';
+/* ---------- Common Components ---------- */
+import { Logo } from '_common/components/Logo';
 
 /* ---------- Module Types ---------- */
 import { Authentication } from '_modules/authentication/@types';
@@ -112,6 +112,7 @@ export const AuthTemplate = ({ sign_in, sign_up }: Props) => {
     try {
       await handleVerifyAccount({ code, email: local_user.email });
       await handleLogin(local_user);
+      push('/');
     } catch (err) {
       notifications.show({ message: get_axios_error(err) || '', color: 'red' });
     }
