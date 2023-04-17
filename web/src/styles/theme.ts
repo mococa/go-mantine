@@ -25,15 +25,14 @@ interface CustomTheme {
 export type Theme = MantineThemeOverride & CustomTheme;
 
 /* ---------- Themes ---------- */
-const _theme: Partial<MantineThemeOverride> = {
-  colorScheme: 'light',
+const main_theme: Partial<MantineThemeOverride> = {
   primaryColor: 'blue',
   primaryShade: 7,
   fontFamily: 'Poppins',
 };
 
 const merged_theme: Theme = {
-  ...merge({}, DEFAULT_THEME, { ..._theme }),
+  ...merge({}, DEFAULT_THEME, { ...main_theme }),
   screen_sizes,
 };
 
