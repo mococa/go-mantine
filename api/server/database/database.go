@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +18,7 @@ func Init() *gorm.DB {
 	}
 
 	DB_URI := env.DB_URI
-	db, err := gorm.Open(postgres.Open(DB_URI), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(DB_URI), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal(err)
