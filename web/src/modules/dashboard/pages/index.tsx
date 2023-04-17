@@ -1,12 +1,113 @@
+/* ---------- External ---------- */
+import React from 'react';
 import { Button } from '@mantine/core';
+import Link from 'next/link';
+
+/* ---------- Common Templates ---------- */
 import { MainLayout } from '_common/templates/MainLayout';
 
-export const Dashboard = () => (
-  <MainLayout>
-    <h4>Hello world</h4>
+/* ---------- Hooks ---------- */
+import { useCheckUserIsLoggedIn } from '_hooks/checkUserIsLoggedIn';
 
-    <Button component="a" href="/protected">
-      Go to another protected page
-    </Button>
-  </MainLayout>
-);
+export const Dashboard = () => {
+  useCheckUserIsLoggedIn();
+
+  return (
+    <MainLayout>
+      <h4>Hello world</h4>
+
+      <Link href="/protected">
+        <Button>Go to another protected page</Button>
+      </Link>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+
+      <h4>Hello world</h4>
+      <h4>Hello world</h4>
+    </MainLayout>
+  );
+};

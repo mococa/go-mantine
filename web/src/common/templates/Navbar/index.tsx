@@ -11,11 +11,22 @@ import {
   Menu,
   Paper,
   Text,
+  useMantineColorScheme,
 } from '@mantine/core';
 import Link from 'next/link';
 import { useOs, useMediaQuery } from '@mantine/hooks';
 import { useSpotlight } from '@mantine/spotlight';
-import { MdLogout, MdNotifications, MdPerson, MdSearch } from 'react-icons/md';
+import {
+  MdBrush,
+  MdDehaze,
+  MdLogout,
+  MdNotifications,
+  MdPerson,
+  MdSearch,
+} from 'react-icons/md';
+
+/* ---------- Common Components ---------- */
+import { Logo } from '_common/components/Logo';
 
 /* ---------- Contexts ---------- */
 import { useAuth } from '_contexts/auth';
@@ -24,12 +35,25 @@ import { useAuth } from '_contexts/auth';
 import { useResetContexts } from '_hooks/resetContexts';
 
 /* ---------- Styles ---------- */
-import { MenuItemSx, NavbarSx } from './styles';
+import {
+  KbdContainerSx,
+  LogoWrapperSx,
+  MenuItemSx,
+  NavbarSx,
+  NotificationsButtonSx,
+} from './styles';
 
-export const Navbar = () => {
+/* ---------- Interfaces ---------- */
+interface Props {
+  handleToggleSidebar: () => void;
+  handleToggleDrawer: () => void;
+}
+
+export const Navbar = ({ handleToggleSidebar, handleToggleDrawer }: Props) => {
   /* ---------- Hooks ---------- */
   const mobile = useMediaQuery('(max-width: 500px)');
   const os = useOs();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { openSpotlight } = useSpotlight();
   const { user } = useAuth();
   const { handleLogout } = useResetContexts();
@@ -52,7 +76,7 @@ export const Navbar = () => {
           Search
         </Text>
 
-        <Box ml="auto" mb={2}>
+        <Box sx={KbdContainerSx}>
           <Kbd>{os === 'macos' ? '⌘' : 'Ctrl'}</Kbd>+<Kbd>K</Kbd>
         </Box>
       </Flex>
@@ -70,11 +94,20 @@ export const Navbar = () => {
 
       <Menu.Divider />
 
+      <Menu.Label>Theme</Menu.Label>
+      <Menu.Item
+        icon={<MdBrush />}
+        sx={MenuItemSx}
+        onClick={() => toggleColorScheme()}
+      >
+        Toggle theme
+      </Menu.Item>
+
       <Menu.Label>More</Menu.Label>
       <Menu.Item
         icon={<MdLogout />}
         sx={MenuItemSx}
-        onClick={() => handleLogout({ redirect: false })}
+        onClick={() => handleLogout({ redirect_back: false })}
       >
         Logout
       </Menu.Item>
@@ -83,13 +116,11 @@ export const Navbar = () => {
 
   const renderNotificationButton = () => (
     <Button
-      radius="lg"
-      p={4}
-      w={36}
       variant="white"
       bg="transparent"
       color="gray"
       styles={{ label: { overflow: 'visible' } }}
+      sx={NotificationsButtonSx}
     >
       <Indicator
         label={4}
@@ -106,12 +137,12 @@ export const Navbar = () => {
 
   const renderUserMenu = () => (
     <Flex align="center" gap="lg">
-      {!mobile && renderNotificationButton()}
+      {renderNotificationButton()}
 
       <Menu shadow="md" width={200} position="bottom-end">
         <Menu.Target>
           <Flex align="center" gap="sm" style={{ cursor: 'pointer' }}>
-            <Avatar radius="xl" src={user.picture || undefined}>
+            <Avatar radius="xl" src={user.picture || undefined} color="gray">
               {user.full_name?.[0] || null}
             </Avatar>
 
@@ -126,13 +157,31 @@ export const Navbar = () => {
     </Flex>
   );
 
-  return (
-    <Paper pos="sticky" top={0} sx={NavbarSx}>
-      <Flex
-        p={`16px ${mobile ? 12 : 32}px 4px`}
-        justify="space-between"
-        gap="lg"
+  const renderLogoWithButton = () => (
+    <Flex align="center" gap="sm" sx={LogoWrapperSx}>
+      <Button
+        variant="subtle"
+        p="sm"
+        c={colorScheme === 'light' ? 'gray' : 'gray.4'}
+        onClick={mobile ? handleToggleDrawer : handleToggleSidebar}
       >
+        <MdDehaze size={20} />
+      </Button>
+
+      <Logo clickable height="20" width="80" />
+    </Flex>
+  );
+
+  return (
+    <Paper pos="sticky" top={0} withBorder sx={NavbarSx}>
+      <Flex
+        p={`16px ${mobile ? 12 : 32}px 8px ${mobile ? 12 : 16}px`}
+        justify="space-between"
+        gap={mobile ? 'xs' : 'lg'}
+        align="center"
+      >
+        {renderLogoWithButton()}
+
         {renderSearchBox()}
 
         {renderUserMenu()}
