@@ -1,24 +1,19 @@
 package httpserver
 
 import (
-	"api/config"
 	"api/modules"
 	"api/server/routes"
 	"api/shared"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/rs/cors"
 	"gorm.io/gorm"
 )
 
 func NewServer(port string, db *gorm.DB) *shared.HttpServer {
-	env, err := config.LoadEnv()
-	if err != nil {
-		panic(error.Error(fmt.Errorf("could not load env %s", err)))
-	}
-
 	modules := modules.NewModules(db)
 	router := routes.NewRouter(modules)
 
@@ -27,7 +22,6 @@ func NewServer(port string, db *gorm.DB) *shared.HttpServer {
 		Router:  router,
 		Port:    ":3333",
 		Start:   nil,
-		Env:     env,
 	}
 
 	server.Start = func() {
@@ -38,8 +32,10 @@ func NewServer(port string, db *gorm.DB) *shared.HttpServer {
 }
 
 func startServer(s *shared.HttpServer) {
+	domain := os.Getenv("DOMAIN")
+
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", fmt.Sprintf("https://%s", domain)},
 		AllowCredentials: true,
 		AllowedHeaders:   []string{"*"},
 		ExposedHeaders:   []string{"set-cookie"},

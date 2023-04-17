@@ -5,6 +5,7 @@ import "github.com/spf13/viper"
 type Config struct {
 	DB_URI            string `mapstructure:"DB_URI"`
 	COGNITO_CLIENT_ID string `mapstructure:"COGNITO_CLIENT_ID"`
+	DOMAIN            string `mapstructure:"DOMAIN"`
 }
 
 func LoadEnv() (config Config, err error) {
@@ -16,7 +17,7 @@ func LoadEnv() (config Config, err error) {
 
 	err = viper.ReadInConfig()
 	if err != nil {
-		panic(err)
+		viper.AutomaticEnv()
 	}
 
 	err = viper.Unmarshal(&config)
