@@ -20,14 +20,11 @@ export default function HomePage({ logged_in }: { logged_in?: boolean }) {
 
 export const getServerSideProps = async ({
   req,
-  res,
 }: GetServerSidePropsContext) => {
   // Preventing logic re-running after client is already mounted
   if (typeof window !== 'undefined') return { props: {} };
 
   const { id_token } = cookie.parse(req.headers.cookie || '');
-
-  res.setHeader('Cache-Control', 's-maxage=5, stale-while-revalidate');
 
   return {
     props: {
