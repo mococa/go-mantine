@@ -92,6 +92,8 @@ const App = ({
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
 
+          <title>%NAME%</title>
+
           <meta name="description" content="%NAME% will do some cool stuff" />
         </Head>
 
