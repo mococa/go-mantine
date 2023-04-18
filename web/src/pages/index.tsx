@@ -10,17 +10,22 @@ import { useAuth } from '_contexts/auth';
 import { SignIn } from '_modules/authentication/pages/sign-in';
 import { Dashboard } from '_modules/dashboard/pages';
 
-export default function HomePage({ logged_in }: { logged_in?: boolean }) {
-  const { user } = useAuth();
+/* ---------- Interfaces ---------- */
+interface Props {
+  id_token?: string;
+}
 
-  if (user.sub || logged_in) return <Dashboard />;
+export default function HomePage({ id_token }: Props) {
+  const { user } = useAuth({ id_token });
+
+  if (user.sub || Boolean(id_token)) return <Dashboard />;
 
   return <SignIn />;
 }
 
 export const getServerSideProps = async ({
   req,
-}: GetServerSidePropsContext) => {
+}: GetServerSidePropsContext): Promise<{ props: Props }> => {
   // Preventing logic re-running after client is already mounted
   if (typeof window !== 'undefined') return { props: {} };
 
@@ -28,7 +33,7 @@ export const getServerSideProps = async ({
 
   return {
     props: {
-      logged_in: Boolean(id_token),
+      id_token: id_token || '',
     },
   };
 };

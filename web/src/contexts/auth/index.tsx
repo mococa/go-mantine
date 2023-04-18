@@ -38,6 +38,10 @@ interface AuthContextData {
   handleVerifyAccount: (props: Context.Handlers.Confirm) => Promise<void>;
 }
 
+interface DefaultHookProps {
+  id_token?: string;
+}
+
 interface Props {
   children: React.ReactNode;
 }
@@ -170,7 +174,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         access_token,
         id_token,
         refresh_token,
-        Boolean(client_side && getStorageTokens().persist),
+        getStorageTokens().persist,
       );
 
     return undefined;
@@ -204,10 +208,25 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
+export const useAuth = (props?: DefaultHookProps) => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('Error inside of useAuth');
+  }
+
+  if (!props?.id_token) return context;
+
+  try {
+    const {
+      email,
+      sub,
+      'custom:full_name': full_name,
+      picture,
+    }: Auth.Decoded = jwt_decode(props.id_token);
+
+    context.user = { email, sub, full_name, picture };
+  } catch (error) {
+    //
   }
 
   return context;
