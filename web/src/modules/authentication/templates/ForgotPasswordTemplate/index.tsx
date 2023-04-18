@@ -1,7 +1,8 @@
 /* ---------- External ---------- */
 import React, { useState } from 'react';
 import { Paper, Box, Title, Text } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { useRouter } from 'next/router';
 
 /* ---------- Common Components ---------- */
 import { Logo } from '_common/components/Logo';
@@ -11,18 +12,24 @@ import { Authentication } from '_modules/authentication/@types';
 
 /* ---------- Module Components ---------- */
 import { ForgotPasswordForm } from '_modules/authentication/components/ForgotPasswordForm';
+
+/* ---------- Services ---------- */
 import { services } from '_services';
-import { notifications } from '@mantine/notifications';
-import { useRouter } from 'next/router';
+
+/* ---------- Utils ---------- */
 import { get_axios_error } from '_utils/helpers/errors/get_axios_error';
+
+/* ---------- Styles ---------- */
+import {
+  FormContainerBoxSx,
+  FormTitleSx,
+  PaperContainerSx,
+} from '_modules/authentication/styles';
 
 /* ---------- Interfaces ---------- */
 
 export const ForgotPasswordTemplate = () => {
   /* ---------- Hooks ---------- */
-  const mobile = useMediaQuery('(max-width: 500px)');
-  const large_screen = useMediaQuery('(min-width: 1920px)');
-
   const { push } = useRouter();
 
   /* ---------- States ---------- */
@@ -52,19 +59,11 @@ export const ForgotPasswordTemplate = () => {
   };
 
   return (
-    <Paper
-      mih="100vh"
-      p={`${mobile ? '96px' : '0'} ${mobile ? 12 : 56}px 0`}
-      style={{ flex: 1, display: 'flex', placeContent: 'center' }}
-    >
-      <Box
-        maw={large_screen ? 500 : 460}
-        m={`${!mobile ? 'auto' : '0'} 0`}
-        style={{ width: '100%' }}
-      >
+    <Paper sx={PaperContainerSx}>
+      <Box sx={FormContainerBoxSx}>
         <Logo width="100" height="20" />
 
-        <Title order={mobile ? 3 : (large_screen && 2) || 3} mt="sm" mb={4}>
+        <Title order={3} sx={FormTitleSx}>
           Forgot password
         </Title>
 

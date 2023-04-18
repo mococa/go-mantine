@@ -6,12 +6,15 @@ import { useMediaQuery } from '@mantine/hooks';
 /* ---------- Module Components ---------- */
 import { AuthTemplate } from '_modules/authentication/templates/AuthTemplate';
 
+/* ---------- Styles ---------- */
+import { AuthPageSx } from '_modules/authentication/styles';
+
 export const SignUp = () => {
   /* ---------- Hooks ---------- */
   const mobile = useMediaQuery('(max-width: 500px)');
 
   return (
-    <Flex w="100%" direction={mobile ? 'column' : 'row'}>
+    <Flex sx={AuthPageSx}>
       <AuthTemplate sign_up />
 
       <Image
