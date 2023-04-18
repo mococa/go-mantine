@@ -28,6 +28,7 @@ export const SidebarSx: Sx = ({ fn }) => ({
 
   [fn.smallerThan(500)]: {
     position: 'fixed',
+
     width: '70%',
     left: '-100%',
 
@@ -37,10 +38,17 @@ export const SidebarSx: Sx = ({ fn }) => ({
   },
 });
 
-export const MainContentSx: Sx = () => ({
+export const MainContentSx: Sx = ({ fn }) => ({
   overflow: 'auto',
+
   height: 'calc(100vh - 63px)',
+
   flex: 1,
+
+  padding: 12,
+  [fn.largerThan(500)]: {
+    padding: 32,
+  },
 });
 
 export const ExpandSx: Sx = () => ({

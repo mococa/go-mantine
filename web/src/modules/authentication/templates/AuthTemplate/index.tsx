@@ -10,7 +10,6 @@ import {
   Modal,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { useMediaQuery } from '@mantine/hooks';
 import { HiOutlineMailOpen } from 'react-icons/hi';
 
 /* ---------- Common Components ---------- */
@@ -33,6 +32,13 @@ import { get_axios_error } from '_utils/helpers/errors/get_axios_error';
 import { services } from '_services';
 import { useRouter } from 'next/router';
 
+/* ---------- Styles ---------- */
+import {
+  FormContainerBoxSx,
+  FormTitleSx,
+  PaperContainerSx,
+} from '_modules/authentication/styles';
+
 /* ---------- Interfaces ---------- */
 interface Props {
   sign_in?: boolean;
@@ -41,9 +47,6 @@ interface Props {
 
 export const AuthTemplate = ({ sign_in, sign_up }: Props) => {
   /* ---------- Hooks ---------- */
-  const mobile = useMediaQuery('(max-width: 500px)');
-  const large_screen = useMediaQuery('(min-width: 1920px)');
-
   const { push, query } = useRouter();
   const { handleSignIn, handleSignUp, handleVerifyAccount } = useAuth();
 
@@ -126,19 +129,11 @@ export const AuthTemplate = ({ sign_in, sign_up }: Props) => {
     );
 
   return (
-    <Paper
-      mih="100vh"
-      p={`${mobile ? '96px' : '0'} ${mobile ? 12 : 56}px 0`}
-      style={{ flex: 1, display: 'flex', placeContent: 'center' }}
-    >
-      <Box
-        maw={large_screen ? 500 : 460}
-        m={`${!mobile ? 'auto' : '0'} 0`}
-        style={{ width: '100%' }}
-      >
+    <Paper sx={PaperContainerSx}>
+      <Box sx={FormContainerBoxSx}>
         <Logo width="100" height="20" />
 
-        <Title order={mobile ? 3 : (large_screen && 2) || 3} mt="sm" mb={4}>
+        <Title order={3} sx={FormTitleSx}>
           {sign_in ? 'Login' : 'Join us'}
         </Title>
 

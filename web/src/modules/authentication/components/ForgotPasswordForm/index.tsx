@@ -53,21 +53,21 @@ export const ForgotPasswordForm = ({
       email: value =>
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
           ? null
-          : 'Por favor, digite um endereço de e-mail válido',
+          : 'Please, enter a valid e-mail address',
       password: value => {
         if (!/[\d|\w|[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]]{0,7}/.test(value))
-          return 'Senha muito curta';
+          return 'Password too short';
 
         if (!/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(value))
-          return 'Por favor, inclua pelo menos um caractere especial (!@#$%^&*_) em sua senha';
+          return 'Please, include at least one special character in your password (!@#$%^&*_)';
 
         if (!/\d/.test(value))
-          return 'Por favor, inclua pelo menos um número em sua senha';
+          return 'Please, include at least one number in your password';
 
         return null;
       },
       confirm_password: (value, form) =>
-        value !== form.password ? 'Senhas não coincidem' : null,
+        value !== form.password ? "Passwords don't match" : null,
     },
   });
 
@@ -171,7 +171,7 @@ export const ForgotPasswordForm = ({
 
       <TextInput
         label="E-mail"
-        placeholder="Digite seu e-mail"
+        placeholder="Enter your e-mail"
         type="email"
         mb="sm"
         disabled
@@ -180,8 +180,8 @@ export const ForgotPasswordForm = ({
       />
 
       <TextInput
-        label="Código"
-        placeholder="Digite o código enviado por e-mail"
+        label="Code"
+        placeholder="Enter the code sent by e-mail"
         type="number"
         mb="sm"
         {...getInputProps('code')}
@@ -189,16 +189,16 @@ export const ForgotPasswordForm = ({
 
       <Flex mb="lg" gap="md">
         <PasswordInput
-          label="Nova senha"
-          placeholder="Digite uma senha forte"
+          label="New password"
+          placeholder="Enter a strong password"
           w="100%"
           autoComplete="new-password"
           {...getInputProps('password')}
         />
 
         <PasswordInput
-          label="Confirme sua senha"
-          placeholder="Redigite sua nova senha"
+          label="Confirm your password"
+          placeholder="Retype your new password"
           w="100%"
           autoComplete="new-password"
           {...getInputProps('confirm_password')}
@@ -212,13 +212,13 @@ export const ForgotPasswordForm = ({
         loading={loading}
         disabled={resending_code}
       >
-        Restaurar minha senha
+        Restore my password
       </Button>
 
       <Flex mt="lg" mb="md" align="center" gap="xs" justify="space-between">
         <Link href="/" style={{ display: 'inherit', width: 'fit-content' }}>
           <Text color="blue" size="sm">
-            Voltar ao login
+            Back to login
           </Text>
         </Link>
 

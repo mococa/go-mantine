@@ -112,7 +112,12 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
       size="xs"
       title={
         <Sidebar.Section mt="xl" mb="sm">
-          <Logo height="24" width="120" />
+          <Logo
+            height="24"
+            width="120"
+            clickable
+            onClick={handleToggleDrawer}
+          />
         </Sidebar.Section>
       }
     >
@@ -125,7 +130,7 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
       <SpotlightProvider
         actions={[...actions]}
         cleanQueryOnClose
-        shortcut={['ctrl + K']}
+        shortcut={['ctrl + K', 'mod + K', '/']}
         searchPlaceholder="Search for anything"
       >
         <Flex direction="column" sx={ExpandSx} mah="100vh">
@@ -137,9 +142,7 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
           <Flex sx={ExpandSx}>
             {mobile ? renderDrawer() : renderSidebar()}
 
-            <Box p={mobile ? 12 : 32} sx={MainContentSx}>
-              {children}
-            </Box>
+            <Box sx={MainContentSx}>{children}</Box>
           </Flex>
         </Flex>
       </SpotlightProvider>

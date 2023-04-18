@@ -1,6 +1,6 @@
 /* ---------- External ---------- */
 import React from 'react';
-import { Button } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 import Link from 'next/link';
 
 /* ---------- Common Templates ---------- */
@@ -20,94 +20,11 @@ export const Dashboard = () => {
         <Button>Go to another protected page</Button>
       </Link>
 
-      <h4>Hello world</h4>
+      <Text h="120vh" py="lg">
+        Scroll down
+      </Text>
 
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-
-      <h4>Hello world</h4>
-      <h4>Hello world</h4>
+      <Text py="lg">End of page</Text>
     </MainLayout>
   );
 };

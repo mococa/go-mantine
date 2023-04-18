@@ -39,8 +39,11 @@ import {
   KbdContainerSx,
   LogoWrapperSx,
   MenuItemSx,
+  MobileInvisibleSx,
   NavbarSx,
   NotificationsButtonSx,
+  SearchboxSx,
+  SearchboxWrapperSx,
 } from './styles';
 
 /* ---------- Interfaces ---------- */
@@ -60,27 +63,29 @@ export const Navbar = ({ handleToggleSidebar, handleToggleDrawer }: Props) => {
 
   /* ---------- Renderers ---------- */
   const renderSearchBox = () => (
-    <Paper
-      withBorder
-      py={4}
-      px={12}
-      maw={413}
-      w="100%"
-      style={{ cursor: 'pointer', alignSelf: 'center' }}
-      onClick={openSpotlight}
-    >
-      <Flex align="center" gap="xs">
-        <MdSearch color="gray" size={16} />
+    <Flex sx={SearchboxWrapperSx}>
+      <Paper
+        withBorder
+        sx={[SearchboxSx, MobileInvisibleSx]}
+        onClick={openSpotlight}
+      >
+        <Flex align="center" gap="xs">
+          <MdSearch color="gray" size={16} />
 
-        <Text size="sm" mt={1} color="gray.6">
-          Search
-        </Text>
+          <Text size="sm" mt={1} color="gray.6">
+            Search
+          </Text>
 
-        <Box sx={KbdContainerSx}>
-          <Kbd>{os === 'macos' ? '⌘' : 'Ctrl'}</Kbd>+<Kbd>K</Kbd>
-        </Box>
-      </Flex>
-    </Paper>
+          <Box sx={KbdContainerSx}>
+            <Kbd>{os === 'macos' ? '⌘' : 'Ctrl'}</Kbd>+<Kbd>K</Kbd>
+          </Box>
+        </Flex>
+      </Paper>
+
+      <Button color="gray" variant="subtle" onClick={openSpotlight}>
+        <MdSearch color="inherit" size={18} />
+      </Button>
+    </Flex>
   );
 
   const renderUserMenuDropdown = () => (
@@ -142,11 +147,11 @@ export const Navbar = ({ handleToggleSidebar, handleToggleDrawer }: Props) => {
       <Menu shadow="md" width={200} position="bottom-end">
         <Menu.Target>
           <Flex align="center" gap="sm" style={{ cursor: 'pointer' }}>
-            <Avatar radius="xl" src={user.picture || undefined} color="gray">
-              {user.full_name?.[0] || null}
+            <Avatar radius="xl" src={user.picture} color="gray">
+              {user.full_name?.[0]}
             </Avatar>
 
-            {!mobile && <Text>{user.full_name}</Text>}
+            <Text sx={MobileInvisibleSx}>{user.full_name}</Text>
 
             <ChevronIcon />
           </Flex>
@@ -161,31 +166,24 @@ export const Navbar = ({ handleToggleSidebar, handleToggleDrawer }: Props) => {
     <Flex align="center" gap="sm" sx={LogoWrapperSx}>
       <Button
         variant="subtle"
-        p="sm"
+        p="xs"
         c={colorScheme === 'light' ? 'gray' : 'gray.4'}
         onClick={mobile ? handleToggleDrawer : handleToggleSidebar}
       >
         <MdDehaze size={20} />
       </Button>
 
-      <Logo clickable height="20" width="80" />
+      <Logo clickable width="80" />
     </Flex>
   );
 
   return (
     <Paper pos="sticky" top={0} withBorder sx={NavbarSx}>
-      <Flex
-        p={`16px ${mobile ? 12 : 32}px 8px ${mobile ? 12 : 16}px`}
-        justify="space-between"
-        gap={mobile ? 'xs' : 'lg'}
-        align="center"
-      >
-        {renderLogoWithButton()}
+      {renderLogoWithButton()}
 
-        {renderSearchBox()}
+      {renderSearchBox()}
 
-        {renderUserMenu()}
-      </Flex>
+      {renderUserMenu()}
     </Paper>
   );
 };

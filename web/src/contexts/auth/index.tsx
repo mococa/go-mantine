@@ -22,6 +22,7 @@ import { services } from '_services';
 /* ---------- Utils ---------- */
 import { setStorageTokens } from '_utils/helpers/auth/setStorageTokens';
 import { getStorageTokens } from '_utils/helpers/auth/getStorageTokens';
+import { parse_id_token } from '_utils/helpers/auth/parse_id_token';
 
 /* ---------- Interfaces ---------- */
 interface AuthContextData {
@@ -39,6 +40,7 @@ interface AuthContextData {
 }
 
 interface Props {
+  default_id_token: string;
   children: React.ReactNode;
 }
 
@@ -46,9 +48,14 @@ export const AuthContext = createContext<AuthContextData>(
   {} as AuthContextData,
 );
 
-export const AuthProvider: React.FC<Props> = ({ children }) => {
+export const AuthProvider: React.FC<Props> = ({
+  default_id_token,
+  children,
+}) => {
   /* ---------- States ---------- */
-  const [user, setUser] = useState<Models.User>({} as Models.User);
+  const [user, setUser] = useState<Models.User>(
+    default_id_token ? parse_id_token(default_id_token) : ({} as Models.User),
+  );
 
   /* ---------- Callbacks ---------- */
   const handleResetAuth = useCallback(() => {
@@ -170,7 +177,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         access_token,
         id_token,
         refresh_token,
-        Boolean(client_side && getStorageTokens().persist),
+        getStorageTokens().persist,
       );
 
     return undefined;
@@ -206,6 +213,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error('Error inside of useAuth');
   }
