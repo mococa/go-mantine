@@ -97,7 +97,7 @@ const App = ({
           <meta name="description" content="%NAME% will do some cool stuff" />
         </Head>
 
-        <AppProvider>
+        <AppProvider {...props}>
           <Component {...props} />
         </AppProvider>
       </MantineProvider>

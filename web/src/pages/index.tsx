@@ -16,9 +16,13 @@ interface Props {
 }
 
 export default function HomePage({ id_token }: Props) {
-  const { user } = useAuth({ id_token });
+  /* ---------- Hooks ---------- */
+  const { user } = useAuth();
 
-  if (user.sub || Boolean(id_token)) return <Dashboard />;
+  /* ---------- Constants ---------- */
+  const logged_in = user.sub || Boolean(id_token);
+
+  if (logged_in) return <Dashboard />;
 
   return <SignIn />;
 }
