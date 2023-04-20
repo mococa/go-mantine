@@ -20,15 +20,23 @@ import { AppProvider } from '_contexts';
 /* ---------- Constants ---------- */
 import { google_fonts_href } from '_utils/constants/google_fonts_href';
 
+/* ---------- Interfaces ---------- */
+interface Props extends AppProps {
+  color_scheme: ColorScheme;
+  id_token: string;
+}
+
 const App = ({
   Component,
   pageProps: props,
   color_scheme: default_color_scheme,
-}: AppProps & { color_scheme?: ColorScheme }) => {
+  id_token,
+}: Props) => {
   /* ---------- States ---------- */
   const [check_browser_scheme, setCheckBrowserScheme] = useState<boolean>(
     Boolean(default_color_scheme),
   );
+
   const [color_scheme, setColorScheme] = useState<ColorScheme>(
     default_color_scheme || 'light',
   );
@@ -94,10 +102,13 @@ const App = ({
 
           <title>%NAME%</title>
 
-          <meta name="description" content="%NAME% will do some cool stuff" />
+          <meta
+            name="description"
+            content="%NAME% will do some cool stuff 😎"
+          />
         </Head>
 
-        <AppProvider {...props}>
+        <AppProvider {...props} id_token={id_token}>
           <Component {...props} />
         </AppProvider>
       </MantineProvider>
@@ -105,14 +116,38 @@ const App = ({
   );
 };
 
-App.getInitialProps = async (app_context: AppContext) => {
-  const app_props = await NextApp.getInitialProps(app_context);
-  const { ctx } = app_context;
+App.getInitialProps = async (props: AppContext) => {
+  const appProps = await NextApp.getInitialProps(props);
+
+  const { ctx } = props;
+
   const cookies = cookie.parse(ctx.req?.headers?.cookie || '');
 
+  const { id_token } = cookies;
+
+  const current_route = (ctx.asPath || '').replace(/^\/+/, '');
+
+  const protected_routes = ['/protected'];
+
+  const should_redirect =
+    !id_token &&
+    !current_route.includes('?redirect=') &&
+    current_route !== '/' &&
+    protected_routes.some(route => current_route.includes(route.slice(1)));
+
+  if (should_redirect && ctx.res) {
+    // Redirect to the login page if user is not logged in on a protected route
+    ctx.res.writeHead(302, {
+      Location: `/?redirect=${encodeURIComponent(current_route)}`,
+    });
+
+    ctx.res.end();
+  }
+
   return {
-    ...app_props,
-    color_scheme: cookies.color_scheme,
+    ...appProps,
+    color_scheme: cookies.color_scheme as ColorScheme,
+    id_token: id_token || '',
   };
 };
 
