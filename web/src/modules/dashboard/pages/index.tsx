@@ -6,12 +6,7 @@ import Link from 'next/link';
 /* ---------- Common Templates ---------- */
 import { MainLayout } from '_common/templates/MainLayout';
 
-/* ---------- Hooks ---------- */
-import { useCheckUserIsLoggedIn } from '_hooks/checkUserIsLoggedIn';
-
 export const Dashboard = () => {
-  useCheckUserIsLoggedIn();
-
   return (
     <MainLayout>
       <h4>Hello world</h4>

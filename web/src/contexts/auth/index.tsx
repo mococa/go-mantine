@@ -40,7 +40,7 @@ interface AuthContextData {
 }
 
 interface Props {
-  default_id_token: string;
+  id_token: string;
   children: React.ReactNode;
 }
 
@@ -49,7 +49,7 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider: React.FC<Props> = ({
-  default_id_token,
+  id_token: default_id_token,
   children,
 }) => {
   /* ---------- States ---------- */

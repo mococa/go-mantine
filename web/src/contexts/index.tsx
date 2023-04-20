@@ -5,12 +5,18 @@ import React from 'react';
 import { AuthProvider } from '_contexts/auth';
 import { CommonProvider } from '_contexts/common';
 
-interface Props extends React.PropsWithChildren {
+/* ---------- Interfaces ---------- */
+interface ServerSideProps {
   id_token: string;
 }
 
-export const AppProvider = ({ children, id_token }: Props) => (
-  <CommonProvider>
-    <AuthProvider default_id_token={id_token}>{children}</AuthProvider>
-  </CommonProvider>
-);
+/* ---------- Types ---------- */
+type Props = React.PropsWithChildren & ServerSideProps;
+
+export const AppProvider = ({ children, id_token }: Props) => {
+  return (
+    <CommonProvider>
+      <AuthProvider id_token={id_token}>{children}</AuthProvider>
+    </CommonProvider>
+  );
+};

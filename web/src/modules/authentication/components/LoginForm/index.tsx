@@ -27,7 +27,7 @@ interface Props {
 
 const error_map: Record<string, string> = {
   'incorrect email or password':
-    'Account not found. Please, verify your e-mail or password',
+    'Account not found. Please, check your e-mail or password',
 };
 
 export const LoginForm = ({ onSubmit, loading, error, setError }: Props) => {
@@ -66,7 +66,7 @@ export const LoginForm = ({ onSubmit, loading, error, setError }: Props) => {
             icon={<TbAlertCircle size={18} />}
             title="Oh, bummer!"
             color="red"
-            bg="red.1"
+            variant="light"
             withCloseButton
             closeButtonLabel="Close"
             onClose={() => setError('')}
