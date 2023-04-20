@@ -147,7 +147,7 @@ export const Navbar = ({ handleToggleSidebar, handleToggleDrawer }: Props) => {
       <Menu shadow="md" width={200} position="bottom-end">
         <Menu.Target>
           <Flex align="center" gap="sm" style={{ cursor: 'pointer' }}>
-            <Avatar radius="xl" src={user.picture} color="gray">
+            <Avatar radius="xl" src={user.picture?.trim()} color="gray">
               {user.full_name?.[0]}
             </Avatar>
 
